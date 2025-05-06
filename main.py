@@ -1,8 +1,3 @@
-def normalize_youtube_url(url):
-    if "youtube.com/embed/" in url:
-        video_id = url.split("/")[-1]
-        return f"https://www.youtube.com/watch?v={video_id}"
-    return url
 import os
 import re
 import sys
@@ -179,6 +174,12 @@ async def youtube_to_txt(client, message: Message):
     }
 
     url = normalize_youtube_url(url)
+    def normalize_youtube_url(url):
+    if "youtube.com/embed/" in url:
+        video_id = url.split("/")[-1]
+        return f"https://www.youtube.com/watch?v={video_id}"
+    return url
+
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         try:
             result = ydl.extract_info(youtube_link, download=False)
